@@ -7,7 +7,7 @@
 
 /* —— body + fonts —— */
 body {
-  font-family: "Montserrat", Arial, Helvetica, sans-serif;
+  font-family: " Avant Garde Gothic ITC W02 Med", Arial, Helvetica, sans-serif;
   color: #333;
   display: flex;
   justify-content: center;
@@ -22,6 +22,12 @@ body {
 .site-header {
   text-align: center;
   padding-top: 50px;
+}
+
+.site-header .logo {
+  max-width: 180px;
+  height: auto;
+  margin-bottom: 20px;
 }
 
 .site-title {
@@ -50,14 +56,27 @@ body {
 .msg {
   margin-bottom: 14px;
   line-height: 1.5;
+  padding: 12px 16px;
+  border-radius: 18px;
+  max-width: 70%;
+  word-wrap: break-word;
+  clear: both;
 }
 
 .msg.user {
-  color: #000;
+  background: #e3a535;
+  color: #fff;
+  margin-left: auto;
+  float: right;
+  text-align: right;
 }
 
 .msg.ai {
-  color: #666666;
+  background: #f0f0f0;
+  color: #333;
+  margin-right: auto;
+  float: left;
+  text-align: left;
 }
 
 /* input row */
@@ -75,7 +94,7 @@ body {
 }
 
 .chat-form input:focus {
-  outline: 2px solid #000;
+  outline: 2px solid #e3a535;
   outline-offset: 2px;
 }
 
@@ -99,11 +118,11 @@ body {
 }
 
 .chat-form button:hover {
-  background: #666666;
+  background: #e3a535;
 }
 
 .chat-form button:focus {
-  outline: 2px solid #000;
+  outline: 2px solid #e3a535;
   outline-offset: 2px;
 }
 

@@ -4,7 +4,8 @@ const userInput = document.getElementById("userInput");
 const chatWindow = document.getElementById("chatWindow");
 
 // Set initial message
-chatWindow.textContent = "👋 Hello! How can I help you today?";
+chatWindow.innerHTML =
+  '<div class="msg ai">👋 Hello! How can I help you today?</div>';
 
 /* Handle form submit */
 chatForm.addEventListener("submit", async (e) => {
@@ -15,10 +16,10 @@ chatForm.addEventListener("submit", async (e) => {
   if (!message) return;
 
   // Show user message in chat
-  chatWindow.innerHTML += `<div><strong>You:</strong> ${message}</div>`;
+  chatWindow.innerHTML += `<div class="msg user">${message}</div>`;
 
   // Show loading message
-  chatWindow.innerHTML += `<div><strong>Assistant:</strong> <em>Thinking...</em></div>`;
+  chatWindow.innerHTML += `<div class="msg ai"><em>Thinking...</em></div>`;
 
   // Clear input
   userInput.value = "";
@@ -49,8 +50,8 @@ chatForm.addEventListener("submit", async (e) => {
       const errorText = await response.text().catch(() => "(no body)");
       console.error("Worker error:", response.status, errorText);
       chatWindow.innerHTML = chatWindow.innerHTML.replace(
-        "<div><strong>Assistant:</strong> <em>Thinking...</em></div>",
-        `<div><strong>Assistant:</strong> <em>Error ${response.status}: ${errorText}</em></div>`
+        '<div class="msg ai"><em>Thinking...</em></div>',
+        `<div class="msg ai"><em>Error ${response.status}: ${errorText}</em></div>`
       );
       return;
     }
@@ -66,8 +67,8 @@ chatForm.addEventListener("submit", async (e) => {
           : data.error.message || JSON.stringify(data.error);
       console.error("Worker error payload:", data);
       chatWindow.innerHTML = chatWindow.innerHTML.replace(
-        "<div><strong>Assistant:</strong> <em>Thinking...</em></div>",
-        `<div><strong>Assistant:</strong> <em>${msg}</em></div>`
+        '<div class="msg ai"><em>Thinking...</em></div>',
+        `<div class="msg ai"><em>${msg}</em></div>`
       );
       return;
     }
@@ -81,26 +82,24 @@ chatForm.addEventListener("submit", async (e) => {
     if (!assistantReply) {
       console.error("Unexpected response shape:", data);
       chatWindow.innerHTML = chatWindow.innerHTML.replace(
-        "<div><strong>Assistant:</strong> <em>Thinking...</em></div>",
-        `<div><strong>Assistant:</strong> <em>Sorry, unexpected response from server.</em></div>`
+        '<div class="msg ai"><em>Thinking...</em></div>',
+        `<div class="msg ai"><em>Sorry, unexpected response from server.</em></div>`
       );
       return;
     }
 
     // Remove loading message and show actual response
     const chatMessages = chatWindow.innerHTML.replace(
-      "<div><strong>Assistant:</strong> <em>Thinking...</em></div>",
-      `<div><strong>Assistant:</strong> ${assistantReply}</div>`
+      '<div class="msg ai"><em>Thinking...</em></div>',
+      `<div class="msg ai">${assistantReply}</div>`
     );
     chatWindow.innerHTML = chatMessages;
   } catch (error) {
     // Handle any errors
     console.error("Error calling API:", error);
     chatWindow.innerHTML = chatWindow.innerHTML.replace(
-      "<div><strong>Assistant:</strong> <em>Thinking...</em></div>",
-      "<div><strong>Assistant:</strong> <em>Sorry, there was an error. Please try again.</em></div>"
+      '<div class="msg ai"><em>Thinking...</em></div>',
+      '<div class="msg ai"><em>Sorry, there was an error. Please try again.</em></div>'
     );
   }
 });
-
-/*commit and push */
